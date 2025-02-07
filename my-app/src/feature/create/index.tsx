@@ -33,6 +33,7 @@ export const Create = () => {
   const backgrounds = ["japanese-city.png", "nature-city.png"];
   const [activeBackground, setActiveBackground] = useState("japanese-city.png");
   const [activeAssets, setActiveAssets] = useState("hat");
+  const [hoverState, setHoverState] = useState<string | null>(null);
 
   useEffect(() => {
     const updateUnderline = () => {
@@ -393,15 +394,24 @@ export const Create = () => {
                   {backgrounds.map((bg, i) => (
                     <div
                       key={i}
-                      className="cursor-pointer hover:opacity-80 transition-opacity border border-white rounded-2xl overflow-hidden object-cover object-center h-[140px] w-[100px]"
+                      className={`cursor-pointer hover:border-[#836EF9] ${
+                        activeBackground === bg
+                          ? " border-[#836EF9]"
+                          : "border-transparent"
+                      } border-2 rounded-2xl overflow-hidden object-cover 
+                      object-center h-[140px] w-[100px] transition-all duration-300 ease-in-out`}
                       onClick={() => setActiveBackground(bg)}
+                      onMouseEnter={() => setHoverState(bg)}
+                      onMouseLeave={() => setHoverState(null)}
                     >
                       <Image
                         height={140}
                         width={130}
                         src={`/background/${bg}`}
                         alt="logo"
-                        className="object-cover h-[140px]"
+                        className={`object-cover h-[140px] transition-all duration-300 ease-in-out ${
+                          hoverState === bg ? "scale-105" : ""
+                        }`}
                       />
                     </div>
                   ))}
